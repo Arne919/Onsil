@@ -4,14 +4,35 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
   <title>음악 스트리밍 서비스</title>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+  <style>
+    .content {
+      text-align: center;
+    }
+
+    .album-img {
+      width: 200px;
+      height: 200px;
+      object-fit: cover;
+      border-radius: 50%;
+      margin-bottom: 10px;
+    }
+
+    .album-title {
+      font-weight: bold;
+    }
+
+    .album-description {
+      margin-bottom: 20px;
+    }
+  </style>
 </head>
 
 <body>
   <header>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-      <div class="container">
+      <div class="container-fluid">
         <a class="navbar-brand" href="#">
         <img src="YT_Music.png" alt="logo" style="width: 150px; height: 45px;">
         음악 스트리밍 서비스</a>
@@ -20,7 +41,7 @@
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
-          <ul class="navbar-nav ml-auto">
+          <ul class="navbar-nav ms-auto">
             <li class="nav-item">
               <a class="nav-link" href="#">홈</a>
             </li>
@@ -34,6 +55,15 @@
               <a class="nav-link" href="#">즐겨찾기</a>
             </li>
           </ul>
+          <form class="d-flex" role="search">
+            <input class="form-control me-2" type="search" placeholder="검색" aria-label="Search">
+            <button class="btn btn-outline-success" type="submit" style="width: 80px;">검색</button>
+          </form>
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <a class="nav-link" href="#">사용자 정보</a>
+            </li>
+          </ul>
         </div>
       </div>
     </nav>
@@ -41,35 +71,38 @@
 
   <main>
     <div class="container">
-      <h3>Albums</h3>
-      <div class="row">
-        <div class="col-12 col-md-4">
-          <div class="card h-100 shadow-sm">
+      <h1 class="mt-5">Albums</h1>
+      <div class="row mt-4">
+        <div class="col-md-4">
+          <div class="card">
             <img src="album1.jpg" class="card-img-top" alt="뉴진스">
             <div class="card-body">
               <h5 class="card-title">뉴진스-Attention</h5>
               <p class="card-text">누군가를 좋아하게 되었다는 마음을 인정하게 됐을 때, 그 마음이랑 같이 온 설렘과 두근거림을 솔직하고 당당하게 받아들이고 '나에게 주목(Attention)해'라고 선언하는 가장 NewJeans다운 곡이다.</p>
               <a href="#" class="btn btn-primary">Play</a>
+              <a href="#" class="btn btn-secondary">Add to Playlist</a>
             </div>
           </div>
         </div>
-        <div class="col-12 col-md-4">
-          <div class="card h-100 shadow-sm">
+        <div class="col-md-4">
+          <div class="card">
             <img src="album2.jpg" class="card-img-top" alt="아이유">
             <div class="card-body">
               <h5 class="card-title">아이유-홀씨</h5>
               <p class="card-text">세상 모두가 꽃이 될 이유도, 꽃이 될 필요도 없다는 것을 깨달은 30대의 나는 하늘에 홀홀히 나부끼는 홀씨로 살고자 한다.</p>
               <a href="#" class="btn btn-primary">Play</a>
+              <a href="#" class="btn btn-secondary">Add to Playlist</a>
             </div>
           </div>
         </div>
-        <div class="col-12 col-md-4">
-          <div class="card h-100 shadow-sm">
+        <div class="col-md-4">
+          <div class="card">
             <img src="album3.jpg" class="card-img-top" alt="뉴진스앨범">
             <div class="card-body">
               <h5 class="card-title">스트레이키즈-Chk Chk Boom</h5>
               <p class="card-text">원하는 목표를 누구보다 완벽하게 조준하는 자신감을 담았. 스트레이 키즈 방식으로 해석한 라틴 스타일의 힙합 리듬 위 중독성 있는 루프, 나른하고 독특한 탑라인, 가사가 어우러져 새로운 매력을 느낄 수 있는 곡이다.</p>
               <a href="#" class="btn btn-primary">Play</a>
+              <a href="#" class="btn btn-secondary">Add to Playlist</a>
             </div>
           </div>
         </div>
@@ -84,7 +117,7 @@
     </div>
   </footer>
 
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>
