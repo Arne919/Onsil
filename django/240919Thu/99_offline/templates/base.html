@@ -8,6 +8,8 @@
   {% endblock css %}
 </head>
 <body>
+  <a href="{% url "todos:main" %}">[MAIN]</a>
+  <a href="{% url "todos:create" %}">[CREATE]</a>
   {% comment %} 
     이걸 만드는 이유?
     모든 html에서 공통으로 사용할 영역을 이곳에서 작성한다.

@@ -7,4 +7,16 @@
 
 {% block content %}
   <h1>MAIN PAGE</h1>
+  <ul>
+    {% for todo in todo_list %}
+      <li>{{ todo }}</li>
+    {% empty %}
+      <li>아직 할 일이 없습니다.</li>
+    {% endfor %}
+    {% comment %} {% if not work %}
+      <li>아직 할 일이 없습니다.</li>
+    {% else %}
+      <li>{{ work }}</li>
+    {% endif %} {% endcomment %}
+  </ul>
 {% endblock content %}
