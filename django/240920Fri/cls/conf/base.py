@@ -2,7 +2,7 @@ class Person:
     # class variable 만든다.
     population = 0
 
-    # 생성자 함수
+    # 생성자 함수 
     def __init__(self, name, age):
         self.name = name
         self.age = age
