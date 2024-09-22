@@ -2,7 +2,7 @@
 # Edit at https://www.toptal.com/developers/gitignore?templates=windows,macos,visualstudiocode,pycharm,python,django,flask,vuejs,database
  
 ### Database ### 
-*.accdb
+*.accdb 
 *.db
 *.dbf
 *.mdb
