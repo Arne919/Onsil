@@ -1,0 +1,462 @@
+SSAFY@DESKTOP-R2PNFNH MINGW64 ~/Desktop/Onsil/Making_onsil/Django_04 (master)
+$ cd django_ws_4_2
+(venv) 
+SSAFY@DESKTOP-R2PNFNH MINGW64 ~/Desktop/Onsil/Making_onsil/Django_04/django_ws_4_2 (master)
+$ python -m venv venv
+(venv) 
+SSAFY@DESKTOP-R2PNFNH MINGW64 ~/Desktop/Onsil/Making_onsil/Django_04/django_ws_4_2 (master)
+$ deactivate 
+
+SSAFY@DESKTOP-R2PNFNH MINGW64 ~/Desktop/Onsil/Making_onsil/Django_04/django_ws_4_2 (master)
+$ source venv/Scripts/activate
+(venv) 
+SSAFY@DESKTOP-R2PNFNH MINGW64 ~/Desktop/Onsil/Making_onsil/Django_04/django_ws_4_2 (master)
+$ pip install -r requirements.txt 
+Collecting asgiref==3.7.2
+  Using cached asgiref-3.7.2-py3-none-any.whl (24 kB)
+Collecting Django==4.2.2
+  Downloading Django-4.2.2-py3-none-any.whl (8.0 MB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 8.0/8.0 MB 24.3 MB/s eta 0:00:00        
+Collecting sqlparse==0.4.4
+  Using cached sqlparse-0.4.4-py3-none-any.whl (41 kB)
+Collecting typing_extensions==4.6.3
+  Downloading typing_extensions-4.6.3-py3-none-any.whl (31 kB)
+Collecting tzdata==2023.3
+  Downloading tzdata-2023.3-py2.py3-none-any.whl (341 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 341.8/341.8 KB ? eta 0:00:00
+Installing collected packages: tzdata, typing_extensions, sqlparse, asgiref, Django
+Successfully installed Django-4.2.2 asgiref-3.7.2 sqlparse-0.4.4 typing_extensions-4.6.3 tzdata-2023.3
+WARNING: You are using pip version 22.0.4; however, version 24.2 is available.
+You should consider upgrading via the 'C:\Users\SSAFY\Desktop\Onsil\Making_onsil\Django_04\django_ws_4_2\venv\Scripts\python.exe -m pip install --upgrade pip' command.     
+(venv) 
+SSAFY@DESKTOP-R2PNFNH MINGW64 ~/Desktop/Onsil/Making_onsil/Django_04/django_ws_4_2 (master)
+$ python manage.py makemigrations
+Migrations for 'libraries':
+  libraries\migrations\0001_initial.py
+    - Create model Book
+(venv) 
+SSAFY@DESKTOP-R2PNFNH MINGW64 ~/Desktop/Onsil/Making_onsil/Django_04/django_ws_4_2 (master)
+$ python manage.py migrate
+Operations to perform:
+  Apply all migrations: admin, auth, contenttypes, libraries, sessions
+Running migrations:
+  Applying contenttypes.0001_initial... OK
+  Applying auth.0001_initial... OK
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying contenttypes.0002_remove_content_type_name... OK
+  Applying auth.0002_alter_permission_name_max_length... OK
+  Applying auth.0003_alter_user_email_max_length... OK
+  Applying auth.0004_alter_user_username_opts... OK
+  Applying auth.0005_alter_user_last_login_null... OK
+  Applying auth.0006_require_contenttypes_0002... OK
+  Applying auth.0007_alter_validators_add_error_messages... OK
+  Applying auth.0008_alter_user_username_max_length... OK
+  Applying auth.0009_alter_user_last_name_max_length... OK
+  Applying auth.0010_alter_group_name_max_length... OK
+  Applying auth.0011_update_proxy_permissions... OK
+  Applying auth.0012_alter_user_first_name_max_length... OK
+  Applying libraries.0001_initial... OK
+  Applying sessions.0001_initial... OK
+(venv) 
+SSAFY@DESKTOP-R2PNFNH MINGW64 ~/Desktop/Onsil/Making_onsil/Django_04/django_ws_4_2 (master)
+$ pip install ipython
+Collecting ipython
+  Using cached ipython-8.18.1-py3-none-any.whl (808 kB)
+Collecting traitlets>=5
+  Using cached traitlets-5.14.3-py3-none-any.whl (85 kB)
+Collecting pygments>=2.4.0
+  Using cached pygments-2.18.0-py3-none-any.whl (1.2 MB)
+Collecting exceptiongroup
+  Using cached exceptiongroup-1.2.2-py3-none-any.whl (16 kB)
+Collecting prompt-toolkit<3.1.0,>=3.0.41
+  Using cached prompt_toolkit-3.0.47-py3-none-any.whl (386 kB)
+Collecting matplotlib-inline
+  Using cached matplotlib_inline-0.1.7-py3-none-any.whl (9.9 kB)
+Requirement already satisfied: typing-extensions in c:\users\ssafy\desktop\onsil\making_onsil\django_04\django_ws_4_2\venv\lib\site-packages (from ipython) (4.6.3)
+Collecting colorama
+  Using cached colorama-0.4.6-py2.py3-none-any.whl (25 kB)
+Collecting stack-data
+  Using cached stack_data-0.6.3-py3-none-any.whl (24 kB)
+Collecting jedi>=0.16
+  Using cached jedi-0.19.1-py2.py3-none-any.whl (1.6 MB)
+Collecting decorator
+  Using cached decorator-5.1.1-py3-none-any.whl (9.1 kB)
+Collecting parso<0.9.0,>=0.8.3
+  Using cached parso-0.8.4-py2.py3-none-any.whl (103 kB)
+Collecting wcwidth
+  Using cached wcwidth-0.2.13-py2.py3-none-any.whl (34 kB)
+Collecting executing>=1.2.0
+  Using cached executing-2.1.0-py2.py3-none-any.whl (25 kB)
+Collecting asttokens>=2.1.0
+  Using cached asttokens-2.4.1-py2.py3-none-any.whl (27 kB)
+Collecting pure-eval
+  Using cached pure_eval-0.2.3-py3-none-any.whl (11 kB)
+Collecting six>=1.12.0
+  Using cached six-1.16.0-py2.py3-none-any.whl (11 kB)
+Installing collected packages: wcwidth, pure-eval, traitlets, six, pygments, prompt-toolkit, parso, executing, exceptiongroup, decorator, colorama, matplotlib-inline, jedi, asttokens, stack-data, ipython
+Successfully installed asttokens-2.4.1 colorama-0.4.6 decorator-5.1.1 exceptiongroup-1.2.2 executing-2.1.0 ipython-8.18.1 jedi-0.19.1 matplotlib-inline-0.1.7 parso-0.8.4 prompt-toolkit-3.0.47 pure-eval-0.2.3 pygments-2.18.0 six-1.16.0 stack-data-0.6.3 traitlets-5.14.3 wcwidth-0.2.13
+WARNING: You are using pip version 22.0.4; however, version 24.2 is available.
+You should consider upgrading via the 'C:\Users\SSAFY\Desktop\Onsil\Making_onsil\Django_04\django_ws_4_2\venv\Scripts\python.exe -m pip install --upgrade pip' command.     
+(venv) 
+SSAFY@DESKTOP-R2PNFNH MINGW64 ~/Desktop/Onsil/Making_onsil/Django_04/django_ws_4_2 (master)
+$ pyton manage.py shell_plus
+bash: pyton: command not found
+(venv) 
+SSAFY@DESKTOP-R2PNFNH MINGW64 ~/Desktop/Onsil/Making_onsil/Django_04/django_ws_4_2 (master)
+$ python manage.py shell_plus
+Unknown command: 'shell_plus'. Did you mean shell?
+Type 'manage.py help' for usage.
+(venv) 
+SSAFY@DESKTOP-R2PNFNH MINGW64 ~/Desktop/Onsil/Making_onsil/Django_04/django_ws_4_2 (master)
+$ pip install djang-extensions
+ERROR: Could not find a version that satisfies the requirement djang-extensions (from 
+versions: none)
+ERROR: No matching distribution found for djang-extensions
+WARNING: You are using pip version 22.0.4; however, version 24.2 is available.        
+You should consider upgrading via the 'C:\Users\SSAFY\Desktop\Onsil\Making_onsil\Django_04\django_ws_4_2\venv\Scripts\python.exe -m pip install --upgrade pip' command.     
+(venv) 
+SSAFY@DESKTOP-R2PNFNH MINGW64 ~/Desktop/Onsil/Making_onsil/Django_04/django_ws_4_2 (master)
+$ pip install django-extensions
+Collecting django-extensions
+  Using cached django_extensions-3.2.3-py3-none-any.whl (229 kB)
+Requirement already satisfied: Django>=3.2 in c:\users\ssafy\desktop\onsil\making_onsil\django_04\django_ws_4_2\venv\lib\site-packages (from django-extensions) (4.2.2)     
+Requirement already satisfied: tzdata in c:\users\ssafy\desktop\onsil\making_onsil\django_04\django_ws_4_2\venv\lib\site-packages (from Django>=3.2->django-extensions) (2023.3)
+Requirement already satisfied: sqlparse>=0.3.1 in c:\users\ssafy\desktop\onsil\making_onsil\django_04\django_ws_4_2\venv\lib\site-packages (from Django>=3.2->django-extensions) (0.4.4)
+Requirement already satisfied: asgiref<4,>=3.6.0 in c:\users\ssafy\desktop\onsil\making_onsil\django_04\django_ws_4_2\venv\lib\site-packages (from Django>=3.2->django-extensions) (3.7.2)
+Requirement already satisfied: typing-extensions>=4 in c:\users\ssafy\desktop\onsil\making_onsil\django_04\django_ws_4_2\venv\lib\site-packages (from asgiref<4,>=3.6.0->Django>=3.2->django-extensions) (4.6.3)
+Installing collected packages: django-extensions
+Successfully installed django-extensions-3.2.3
+WARNING: You are using pip version 22.0.4; however, version 24.2 is available.
+You should consider upgrading via the 'C:\Users\SSAFY\Desktop\Onsil\Making_onsil\Django_04\django_ws_4_2\venv\Scripts\python.exe -m pip install --upgrade pip' command.     
+(venv) 
+SSAFY@DESKTOP-R2PNFNH MINGW64 ~/Desktop/Onsil/Making_onsil/Django_04/django_ws_4_2 (master)
+$ python manage.py shell_plus
+Unknown command: 'shell_plus'. Did you mean shell?
+Type 'manage.py help' for usage.
+(venv) 
+SSAFY@DESKTOP-R2PNFNH MINGW64 ~/Desktop/Onsil/Making_onsil/Django_04/django_ws_4_2 (master)
+$ python manage.py shell_plus
+# Shell Plus Model Imports
+from django.contrib.admin.models import LogEntry
+from django.contrib.auth.models import Group, Permission, User
+from django.contrib.contenttypes.models import ContentType
+from django.contrib.sessions.models import Session
+from libraries.models import Book
+# Shell Plus Django Imports
+from django.core.cache import cache
+from django.conf import settings
+from django.contrib.auth import get_user_model
+from django.db import transaction
+from django.db.models import Avg, Case, Count, F, Max, Min, Prefetch, Q, Sum, When    
+from django.utils import timezone
+from django.urls import reverse
+from django.db.models import Exists, OuterRef, Subquery
+Python 3.9.13 (tags/v3.9.13:6de2ca5, May 17 2022, 16:36:42) [MSC v.1929 64 bit (AMD64)]
+Type 'copyright', 'credits' or 'license' for more information
+IPython 8.18.1 -- An enhanced Interactive Python. Type '?' for help.
+
+In [1]: Book.objects.create(title='첫번째 책', author='첫번재 책 작가', pubdate='2023 
+   ...: -12-12', price=0, adult=False)
+Out[1]: <Book: Book object (1)>
+
+In [2]: print(book.title)
+---------------------------------------------------------------------------
+NameError                                 Traceback (most recent call last)
+Cell In[2], line 1
+----> 1 print(book.title)
+
+NameError: name 'book' is not defined
+
+In [3]: print(Book.title
+   ...: )
+<django.db.models.query_utils.DeferredAttribute object at 0x0000020D42DB2370>
+
+In [4]: print(Book.title)
+<django.db.models.query_utils.DeferredAttribute object at 0x0000020D42DB2370>
+
+In [5]: Book.objects.create(title='두번째 책', author='두번째 책 작가', pubdate='2023 
+   ...: -12-12', price=0, adult=False)
+Out[5]: <Book: Book object (2)>
+
+In [6]: Book.objects.create(title='세번째 책', author='세번째 책 작가', pubdate='2023 
+   ...: -12-12', price=0, adult=False)
+Out[6]: <Book: Book object (3)>
+
+In [7]: books = Book.objects.all()
+
+In [8]: for book in books:
+   ...:     print(book.title)
+   ...: 
+첫번째 책
+두번째 책
+세번째 책
+
+In [9]: exit
+(venv) 
+SSAFY@DESKTOP-R2PNFNH MINGW64 ~/Desktop/Onsil/Making_onsil/Django_04/django_ws_4_2 (master)
+$ deactivate 
+
+SSAFY@DESKTOP-R2PNFNH MINGW64 ~/Desktop/Onsil/Making_onsil/Django_04/django_ws_4_2 (master)
+$ git add .
+
+SSAFY@DESKTOP-R2PNFNH MINGW64 ~/Desktop/Onsil/Making_onsil/Django_04/django_ws_4_2 (master)
+$ git commit -m "ws_4_2"
+[master 9419a12] ws_4_2
+ 12 files changed, 585 insertions(+)
+ create mode 100644 .gitignore
+ create mode 100644 libraries/migrations/0001_initial.py
+
+SSAFY@DESKTOP-R2PNFNH MINGW64 ~/Desktop/Onsil/Making_onsil/Django_04/django_ws_4_2 (master)
+$ git push origin master
+Enumerating objects: 29, done.
+Counting objects: 100% (29/29), done.
+Delta compression using up to 28 threads
+Compressing objects: 100% (20/20), done.
+Writing objects: 100% (20/20), 8.33 KiB | 8.33 MiB/s, done.
+Total 20 (delta 5), reused 0 (delta 0), pack-reused 0 (from 0)
+To https://lab.ssafy.com/ghgghg96/django_ws_4_2.git
+   e9c1cb3..9419a12  master -> master
+
+SSAFY@DESKTOP-R2PNFNH MINGW64 ~/Desktop/Onsil/Making_onsil/Django_04/django_ws_4_2 (master)
+$ python -m venv venv
+
+SSAFY@DESKTOP-R2PNFNH MINGW64 ~/Desktop/Onsil/Making_onsil/Django_04/django_ws_4_2 (master)
+$ source venv/Scripts/activate
+(venv) 
+SSAFY@DESKTOP-R2PNFNH MINGW64 ~/Desktop/Onsil/Making_onsil/Django_04/django_ws_4_2 (master)
+$ pip install -r requirements.txt 
+Requirement already satisfied: asgiref==3.7.2 in c:\users\ssafy\desktop\onsil\making_onsil\django_04\django_ws_4_2\venv\lib\site-packages (from -r requirements.txt (line 1)) (3.7.2)
+Requirement already satisfied: Django==4.2.2 in c:\users\ssafy\desktop\onsil\making_onsil\django_04\django_ws_4_2\venv\lib\site-packages (from -r requirements.txt (line 2)) (4.2.2)
+Requirement already satisfied: sqlparse==0.4.4 in c:\users\ssafy\desktop\onsil\making_onsil\django_04\django_ws_4_2\venv\lib\site-packages (from -r requirements.txt (line 3)) (0.4.4)
+Requirement already satisfied: typing_extensions==4.6.3 in c:\users\ssafy\desktop\onsil\making_onsil\django_04\django_ws_4_2\venv\lib\site-packages (from -r requirements.txt (line 4)) (4.6.3)
+Requirement already satisfied: tzdata==2023.3 in c:\users\ssafy\desktop\onsil\making_onsil\django_04\django_ws_4_2\venv\lib\site-packages (from -r requirements.txt (line 5)) (2023.3)
+WARNING: You are using pip version 22.0.4; however, version 24.2 is available.
+You should consider upgrading via the 'C:\Users\SSAFY\Desktop\Onsil\Making_onsil\Django_04\django_ws_4_2\venv\Scripts\python.exe -m pip install --upgrade pip' command.     
+(venv) 
+SSAFY@DESKTOP-R2PNFNH MINGW64 ~/Desktop/Onsil/Making_onsil/Django_04/django_ws_4_2 (master)
+$ pip ipython django-extensions
+ERROR: unknown command "ipython"
+(venv) 
+SSAFY@DESKTOP-R2PNFNH MINGW64 ~/Desktop/Onsil/Making_onsil/Django_04/django_ws_4_2 (master)
+$ pip install ipython django-extensions
+Requirement already satisfied: ipython in c:\users\ssafy\desktop\onsil\making_onsil\django_04\django_ws_4_2\venv\lib\site-packages (8.18.1)
+Requirement already satisfied: django-extensions in c:\users\ssafy\desktop\onsil\making_onsil\django_04\django_ws_4_2\venv\lib\site-packages (3.2.3)
+Requirement already satisfied: decorator in c:\users\ssafy\desktop\onsil\making_onsil\django_04\django_ws_4_2\venv\lib\site-packages (from ipython) (5.1.1)
+Requirement already satisfied: stack-data in c:\users\ssafy\desktop\onsil\making_onsil\django_04\django_ws_4_2\venv\lib\site-packages (from ipython) (0.6.3)
+Requirement already satisfied: pygments>=2.4.0 in c:\users\ssafy\desktop\onsil\making_onsil\django_04\django_ws_4_2\venv\lib\site-packages (from ipython) (2.18.0)
+Requirement already satisfied: typing-extensions in c:\users\ssafy\desktop\onsil\making_onsil\django_04\django_ws_4_2\venv\lib\site-packages (from ipython) (4.6.3)
+Requirement already satisfied: exceptiongroup in c:\users\ssafy\desktop\onsil\making_onsil\django_04\django_ws_4_2\venv\lib\site-packages (from ipython) (1.2.2)
+Requirement already satisfied: prompt-toolkit<3.1.0,>=3.0.41 in c:\users\ssafy\desktop\onsil\making_onsil\django_04\django_ws_4_2\venv\lib\site-packages (from ipython) (3.0.47)
+Requirement already satisfied: jedi>=0.16 in c:\users\ssafy\desktop\onsil\making_onsil\django_04\django_ws_4_2\venv\lib\site-packages (from ipython) (0.19.1)
+Requirement already satisfied: colorama in c:\users\ssafy\desktop\onsil\making_onsil\django_04\django_ws_4_2\venv\lib\site-packages (from ipython) (0.4.6)
+Requirement already satisfied: matplotlib-inline in c:\users\ssafy\desktop\onsil\making_onsil\django_04\django_ws_4_2\venv\lib\site-packages (from ipython) (0.1.7)
+Requirement already satisfied: traitlets>=5 in c:\users\ssafy\desktop\onsil\making_onsil\django_04\django_ws_4_2\venv\lib\site-packages (from ipython) (5.14.3)
+Requirement already satisfied: Django>=3.2 in c:\users\ssafy\desktop\onsil\making_onsil\django_04\django_ws_4_2\venv\lib\site-packages (from django-extensions) (4.2.2)     
+Requirement already satisfied: sqlparse>=0.3.1 in c:\users\ssafy\desktop\onsil\making_onsil\django_04\django_ws_4_2\venv\lib\site-packages (from Django>=3.2->django-extensions) (0.4.4)
+Requirement already satisfied: tzdata in c:\users\ssafy\desktop\onsil\making_onsil\django_04\django_ws_4_2\venv\lib\site-packages (from Django>=3.2->django-extensions) (2023.3)
+Requirement already satisfied: asgiref<4,>=3.6.0 in c:\users\ssafy\desktop\onsil\making_onsil\django_04\django_ws_4_2\venv\lib\site-packages (from Django>=3.2->django-extensions) (3.7.2)
+Requirement already satisfied: parso<0.9.0,>=0.8.3 in c:\users\ssafy\desktop\onsil\making_onsil\django_04\django_ws_4_2\venv\lib\site-packages (from jedi>=0.16->ipython) (0.8.4)
+Requirement already satisfied: wcwidth in c:\users\ssafy\desktop\onsil\making_onsil\django_04\django_ws_4_2\venv\lib\site-packages (from prompt-toolkit<3.1.0,>=3.0.41->ipython) (0.2.13)
+Requirement already satisfied: executing>=1.2.0 in c:\users\ssafy\desktop\onsil\making_onsil\django_04\django_ws_4_2\venv\lib\site-packages (from stack-data->ipython) (2.1.0)
+Requirement already satisfied: asttokens>=2.1.0 in c:\users\ssafy\desktop\onsil\making_onsil\django_04\django_ws_4_2\venv\lib\site-packages (from stack-data->ipython) (2.4.1)
+Requirement already satisfied: pure-eval in c:\users\ssafy\desktop\onsil\making_onsil\django_04\django_ws_4_2\venv\lib\site-packages (from stack-data->ipython) (0.2.3)     
+Requirement already satisfied: six>=1.12.0 in c:\users\ssafy\desktop\onsil\making_onsil\django_04\django_ws_4_2\venv\lib\site-packages (from asttokens>=2.1.0->stack-data->ipython) (1.16.0)
+WARNING: You are using pip version 22.0.4; however, version 24.2 is available.
+You should consider upgrading via the 'C:\Users\SSAFY\Desktop\Onsil\Making_onsil\Django_04\django_ws_4_2\venv\Scripts\python.exe -m pip install --upgrade pip' command.     
+(venv) 
+SSAFY@DESKTOP-R2PNFNH MINGW64 ~/Desktop/Onsil/Making_onsil/Django_04/django_ws_4_2 (master)
+$ python manage.py shell_plus
+# Shell Plus Model Imports
+from django.contrib.admin.models import LogEntry
+from django.contrib.auth.models import Group, Permission, User
+from django.contrib.contenttypes.models import ContentType
+from django.contrib.sessions.models import Session
+from libraries.models import Book
+# Shell Plus Django Imports
+from django.core.cache import cache
+from django.conf import settings
+from django.contrib.auth import get_user_model
+from django.db import transaction
+from django.db.models import Avg, Case, Count, F, Max, Min, Prefetch, Q, Sum, When    
+from django.utils import timezone
+from django.urls import reverse
+from django.db.models import Exists, OuterRef, Subquery
+Python 3.9.13 (tags/v3.9.13:6de2ca5, May 17 2022, 16:36:42) [MSC v.1929 64 bit (AMD64)]
+Type 'copyright', 'credits' or 'license' for more information
+IPython 8.18.1 -- An enhanced Interactive Python. Type '?' for help.
+
+In [1]: book1 = Book.objects.get(pk=1)
+
+In [2]: book1.title = '홍길동전'
+
+In [3]: book1.author = '허균'
+
+In [4]: book1.pubdate = '1994-07-25'
+
+In [5]: book1.price = 3000
+
+In [6]: book1.adult = False
+
+In [7]: book1.save()
+
+In [8]: book2 = Book.objects.get(pk=2)
+
+In [9]: book2.title = '난중일기'
+
+In [10]: book2.author = '이순신'
+
+In [11]: book2.pubdate = '2015-01-21'
+
+In [12]: book2.price = 0
+
+In [13]: book2.adult = True
+
+In [14]: book2.save()
+
+In [15]: book3 = Book.objects.get(pk=3)
+
+In [16]: book3.title = '세종실록'
+
+In [17]: book3.author = '이도'
+
+In [18]: book3.pubdate = '1397-05-15'
+
+In [19]: book3.price = 0
+
+In [20]: book3.adult = False
+
+In [21]: book3.save()
+
+In [22]: book1.title
+Out[22]: '홍길동전'
+
+In [23]: book1.author
+Out[23]: '허균'
+
+In [24]: book1.pubdate
+Out[24]: '1994-07-25'
+
+In [25]: book1.price
+Out[25]: 3000
+
+In [26]: book1.adult
+Out[26]: False
+
+In [27]: book2.title
+Out[27]: '난중일기'
+
+In [28]: book2.author
+Out[28]: '이순신'
+
+In [29]: book2.pubdate
+Out[29]: '2015-01-21'
+
+In [30]: book2.price
+Out[30]: 0
+
+In [31]: book2.adult
+Out[31]: True
+
+In [32]: book3.title
+Out[32]: '세종실록'
+
+In [33]: book3.adult
+Out[33]: False
+
+In [34]: book3.author
+Out[34]: '이도'
+
+In [35]: book3.pubdate
+Out[35]: '1397-05-15'
+
+In [36]: book3.price
+Out[36]: 0
+
+In [37]: book1.delete()
+Out[37]: (1, {'libraries.Book': 1})
+
+In [38]: book2.delete()
+Out[38]: (1, {'libraries.Book': 1})
+
+In [39]: book3.delete()
+Out[39]: (1, {'libraries.Book': 1})
+
+In [40]: book1.title
+Out[40]: '홍길동전'
+
+In [41]: book1.delete()
+---------------------------------------------------------------------------
+ValueError                                Traceback (most recent call last)
+Cell In[41], line 1
+----> 1 book1.delete()
+
+File ~\Desktop\Onsil\Making_onsil\Django_04\django_ws_4_2\venv\lib\site-packages\django\db\models\base.py:1125, in Model.delete(self, using, keep_parents)
+   1123 def delete(self, using=None, keep_parents=False):
+   1124     if self.pk is None:
+-> 1125         raise ValueError(
+   1126             "%s object can't be deleted because its %s attribute is set "     
+   1127             "to None." % (self._meta.object_name, self._meta.pk.attname)      
+   1128         )
+   1129     using = using or router.db_for_write(self.__class__, instance=self)       
+   1130     collector = Collector(using=using, origin=self)
+
+ValueError: Book object can't be deleted because its id attribute is set to None.     
+
+In [42]: book1.delete()
+---------------------------------------------------------------------------
+ValueError                                Traceback (most recent call last)
+Cell In[42], line 1
+----> 1 book1.delete()
+
+File ~\Desktop\Onsil\Making_onsil\Django_04\django_ws_4_2\venv\lib\site-packages\django\db\models\base.py:1125, in Model.delete(self, using, keep_parents)
+   1123 def delete(self, using=None, keep_parents=False):
+   1124     if self.pk is None:
+-> 1125         raise ValueError(
+   1126             "%s object can't be deleted because its %s attribute is set "     
+   1127             "to None." % (self._meta.object_name, self._meta.pk.attname)      
+   1128         )
+   1129     using = using or router.db_for_write(self.__class__, instance=self)       
+   1130     collector = Collector(using=using, origin=self)
+
+ValueError: Book object can't be deleted because its id attribute is set to None.     
+
+In [43]: book2.delete()
+---------------------------------------------------------------------------
+ValueError                                Traceback (most recent call last)
+Cell In[43], line 1
+----> 1 book2.delete()
+
+File ~\Desktop\Onsil\Making_onsil\Django_04\django_ws_4_2\venv\lib\site-packages\django\db\models\base.py:1125, in Model.delete(self, using, keep_parents)
+   1123 def delete(self, using=None, keep_parents=False):
+   1124     if self.pk is None:
+-> 1125         raise ValueError(
+   1126             "%s object can't be deleted because its %s attribute is set "     
+   1127             "to None." % (self._meta.object_name, self._meta.pk.attname)      
+   1128         )
+   1129     using = using or router.db_for_write(self.__class__, instance=self)       
+   1130     collector = Collector(using=using, origin=self)
+
+ValueError: Book object can't be deleted because its id attribute is set to None.     
+
+In [44]: book1.title
+Out[44]: '홍길동전'
+
+In [45]: Book.objects.all()
+Out[45]: <QuerySet []>
+
+In [46]: exit
+(venv) 
+SSAFY@DESKTOP-R2PNFNH MINGW64 ~/Desktop/Onsil/Making_onsil/Django_04/django_ws_4_2 (master)
+$ deactivate 
+
+SSAFY@DESKTOP-R2PNFNH MINGW64 ~/Desktop/Onsil/Making_onsil/Django_04/django_ws_4_2 (master)
+$ git add .
+
+SSAFY@DESKTOP-R2PNFNH MINGW64 ~/Desktop/Onsil/Making_onsil/Django_04/django_ws_4_2 (master)
+$ git commit -m "ws_4_2"
+On branch master
+Your branch is up to date with 'origin/master'.
+
+nothing to commit, working tree clean
