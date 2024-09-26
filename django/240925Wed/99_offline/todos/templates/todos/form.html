@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block content %}
+  {% if request.resolver_match.url_name == 'create' %}
+    <h1>CREATE PAGE</h1>
+  {% else %}
+    <h1>UPDATE PAGE</h1>
+  {% endif %}
+  
+  <!--
+    form 태그의 action을 비워두면? 무슨일이 벌어지느냐?
+    상대 경로 -> 상대 경로가 비어있음 : 거긴 어디? 내 위치 그대로
+
+  -->
+  <form method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="SUBMIT">
+  </form>
+{% endblock content %}
