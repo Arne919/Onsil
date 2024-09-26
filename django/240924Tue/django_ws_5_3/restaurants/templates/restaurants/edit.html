@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h1>식당 수정 페이지</h1>
+  <form action="{% url 'restaurants:update' restaurant.pk %}" method="POST">
+    {% csrf_token %}
+    <div class="mb-3">
+      <label for="name" class="form-label">이름 : </label>
+      <input type="text" class="form-control" id="name" name="name" value="{{ restaurant.name }}">
+    </div>
+    <div class="mb-3">
+      <label for="address" class="form-label">주소 : </label>
+      <input type="text" class="form-control" id="address" name="address" aria-describedby="addressHelp" value="{{ restaurant.address }}">
+      <div id="addressHelp" class="form-text">주소는 OO시 OO구 OO동 형식으로 작성합니다.</div>
+    </div>
+    <div class="mb-3">
+      <label for="phone_number" class="form-label">전화번호 : </label>
+      <input type="text" class="form-control" id="phone_number" name="phone_number" aria-describedby="phone_numberHelp" value="{{ restaurant.phone_number }}">
+      <div id="phone_numberHelp" class="form-text">전화번호는 특수문자 없이 지역번호를 포함한 숫자만 입력합니다.</div>
+    </div>
+    <div class="mb-3">
+      <label for="description" class="form-label">식당 소개</label>
+      <textarea class="form-control" id="description" name="description" rows="3">{{ restaurant.description }}</textarea>
+    </div>
+    <button type="submit" class="btn btn-primary">UPDATE</button>
+  </form>
+
+  <a href="{% url 'restaurants:index' %}">[BACK]</a>
+{% endblock content %}
