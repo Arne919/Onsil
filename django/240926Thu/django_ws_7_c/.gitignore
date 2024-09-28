@@ -3,7 +3,7 @@
 
 ### Database ###
 *.accdb
-*.db
+*.db 
 *.dbf
 *.mdb
 *.pdb
@@ -274,7 +274,8 @@ instance/*
 .LSOverride
 
 # Icon must end with two \r
-Icon
+Icon
+
 
 # Thumbnails
 ._*
