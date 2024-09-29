@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <h1>INDEX</h1>
+  <a href="{% url "my_app:create" %}">[사진을 등록하려면 누르세요]</a>
+
+  <p>기본 경로에서 불러온 이미지</p>
+  <img src="{% static "my_app/kuromi.jpg" %}" alt="kuromi">
+  <hr>
+  <p>추가 경로에서 불러온 이미지</p>
+  <img src="{% static "cat.jpg" %}" alt="cat">
+{% endblock content %}
