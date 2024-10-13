@@ -7,7 +7,7 @@
   <p>나이 : {{ author.age }}</p>
   <p>생년월일 : {{ author.birth }}</p>
   <p>국적 : {{ author.nationality }}</p>
-  <hr>
+  <hr> 
   <h3>신규 도서 등록</h3>
   <form action="{% url "libraries:books_create" author.pk %}" method="POSt">
     {% csrf_token %}
