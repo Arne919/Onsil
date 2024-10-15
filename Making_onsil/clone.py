@@ -36,6 +36,14 @@ Gitlab Auto Clone Ver 2.1
 
 상대경로 -> 절대경로 변경 (feat. 지연쓰 ~Error, Mistake(닉네임 오타))
 예외처리 추가 -> 오류 내역 상세 출력
+
+
+
+Gitlab Auto Clone Ver 2.2
+
+ROOT 폴더명 추가 및 차수 폴더 과목명 ALL 대문자로 변경
+차수 다중입력 기능 추가
+종료 시 원한다면 계속 Clone에 머무를 수 있도록 변경
 '''
 
 from os import path, getcwd
@@ -119,7 +127,12 @@ def clone(USER_NAME, SUBJECT, OS_N):  # 깃랩 레포 클론하기
     run(clear, shell=True)
     print(f"\n{USER_NAME}의 {SUBJECT} 레포 관리\n")
     base_URL='https://lab.ssafy.com' if OS_N<=2 else f'https://{USER_NAME}:{"".join(sc[a] if a in sc else a for a in getpass("깃랩 비밀번호를 입력해주세요. (화면에 노출 X): "))}@lab.ssafy.com'
-    DAY=input("프로젝트 차수 입력 (ex>  2차. Templates ==> 2): ")
+    DAYs=input("프로젝트 차수 입력 ( ex> 2 (단일), 1-3 (다중) ): ")
+    
+    if '-' in DAYs: DAY1, DAY2 = DAYs.split('-')
+    else : DAY1 = DAY2 = DAYs
+    
+    if DAY2=='':DAY2=DAY1
     
     print("\n.gitignore 기본 세팅\n")
     print(*glst)
@@ -128,26 +141,32 @@ def clone(USER_NAME, SUBJECT, OS_N):  # 깃랩 레포 클론하기
     else:set_ignore(1)
     run(clear, shell=True)
     
-    for sep in range(2):
-        for st in STAGE[sep]:
-            PROJECT=f'{SUBJECT}_{SEPERATOR[sep]}_{DAY}_{st}'
-            p_folder=f'{SUBJECT.upper() if SUBJECT == "js" else SUBJECT.capitalize()}_{DAY.zfill(2)}'
-            print(f'\n{PROJECT} 클론 시도중...')
-            URL=f'{base_URL}/{USER_NAME}/{PROJECT}'
-            folder_path=path.join(getcwd(), p_folder, PROJECT) # 절대 경로로 변경
-            #folder_path=f'./{SUBJECT.upper() if SUBJECT == "js" else SUBJECT.capitalize()}_{DAY.zfill(2)}/{PROJECT}'
-            cmd=f'git clone {URL}.git {folder_path}'
-            output=run(cmd, shell=True, capture_output=True, text=True)
-            
-            if output.returncode==0:
-                print(f'{folder_path}에 {PROJECT} 클론 성공.')
-                if not path.exists(f'{folder_path}/.gitignore'):ignore(folder_path)
-            elif output.returncode==128:
-                if 'denied' in output.stderr: print("권한 거부 당함.... 비번 틀렸을수도...?")
-                else: 
-                    print(f'{folder_path}에 {PROJECT} 폴더가 이미 존재합니다.')
+    for DAY in range(int(DAY1), int(DAY2)+1):
+        DAY=str(DAY)
+        for sep in range(2):
+            for st in STAGE[sep]:
+                PROJECT=f'{SUBJECT}_{SEPERATOR[sep]}_{DAY}_{st}'
+                r_folder=SUBJECT.upper()
+                p_folder=f'{SUBJECT.upper()}_{DAY.zfill(2)}'
+                print(f'\n{PROJECT} 클론 시도중...')
+                URL=f'{base_URL}/{USER_NAME}/{PROJECT}'
+                folder_path=path.join(getcwd(), r_folder, p_folder, PROJECT) # 절대 경로로 변경
+                #folder_path=f'./{SUBJECT.upper() if SUBJECT == "js" else SUBJECT.capitalize()}_{DAY.zfill(2)}/{PROJECT}'
+                cmd=f'git clone {URL}.git {folder_path}'
+                output=run(cmd, shell=True, capture_output=True, text=True)
+                
+                if output.returncode==0:
+                    print(f'{folder_path}에 {PROJECT} 클론 성공.')
                     if not path.exists(f'{folder_path}/.gitignore'):ignore(folder_path)
-            else:print('무슨 문제일까요...? 알려주세요...\n', output, '\n')
+                elif output.returncode==128:
+                    if 'denied' in output.stderr: print("권한 거부 당함.... 비번 틀렸을수도...?")
+                    else: 
+                        print(f'에러 : {output}\n{folder_path}에 {PROJECT} 폴더가 이미 존재합니다...\n아니면 깃 자격증명이 적용 안되었을지도...?')
+                        if not path.exists(f'{folder_path}/.gitignore'):ignore(folder_path)
+                else:print('무슨 문제일까요...? 알려주세요...\n', output, '\n')
+        print(f'\n{DAY} 차수 클론 완료.')
+        sleep(2)
+        run(clear, shell=True)
 
 
 def del_dot_git(USER, SUBJECT, OS_N):
@@ -158,24 +177,36 @@ def del_dot_git(USER, SUBJECT, OS_N):
         
         try:
             print(f"\n{USER}의 {SUBJECT} 레포 관리\n")
-            DAY=input(f"\n{SUBJECT} 프로젝트 차수 입력 (ex>  2차. Templates ==> 2): ")
+            DAYs=input(f"\n{SUBJECT} 프로젝트 차수 입력 ( ex> 2 (단일), 1-3 (다중) ): ")
+
+            if '-' in DAYs: DAY1, DAY2 = DAYs.split('-')
+            else : DAY1 = DAY2 = DAYs
             
-            for sep in range(2):
-                for st in STAGE[sep]:
-                    PROJECT=f'{SUBJECT}_{SEPERATOR[sep]}_{DAY}_{st}'
-                    p_folder=f'{SUBJECT.upper() if SUBJECT == "js" else SUBJECT.capitalize()}_{DAY.zfill(2)}'
-                    g='.git'
-                    folder_path = f'"{path.join(getcwd() ,p_folder, PROJECT, g)}"'
-                    print(f'\n{folder_path} 삭제 시도중...')
-                    cmd=f'{del_co} {folder_path}'
-                    output=run(cmd, shell=True, capture_output=True, text=True)
-                    
-                    if OS_N==1:
-                        if output.returncode==0:print(f'{folder_path} 폴더가 삭제되었습니다.')
-                        elif output.returncode==2:print(f'Error: {folder_path} 폴더를 찾지 못했습니다. 이미 삭제되었을 수도?')
-                    else:print(f'{folder_path} 폴더가 삭제되었습니다.')
+            if DAY2=='':DAY2=DAY1
+            
+            for DAY in range(int(DAY1), int(DAY2)+1):
+                DAY=str(DAY)
+                for sep in range(2):
+                    for st in STAGE[sep]:
+                        PROJECT=f'{SUBJECT}_{SEPERATOR[sep]}_{DAY}_{st}'
+                        r_folder=SUBJECT.upper()
+                        p_folder=f'{SUBJECT.upper()}_{DAY.zfill(2)}'
+                        g='.git'
+                        folder_path = f'"{path.join(getcwd(), r_folder, p_folder, PROJECT, g)}"'
+                        print(f'\n{folder_path} 삭제 시도중...')
+                        cmd=f'{del_co} {folder_path}'
+                        output=run(cmd, shell=True, capture_output=True, text=True)
+                        
+                        if OS_N==1:
+                            if output.returncode==0:print(f'{folder_path} 폴더가 삭제되었습니다.')
+                            elif output.returncode==2:print(f'Error: {folder_path} 폴더를 찾지 못했습니다. 이미 삭제되었을 수도?')
+                        else:print(f'{folder_path} 폴더가 삭제되었습니다.')
+                        
+                print(f'\n{DAY} 차수 클론 완료.')
+                sleep(2)
+                run(clear, shell=True)
         except:
-            print("경로 없어용.....")
+            print("에러 발생...경로 없어용.....")
     else: print('\n다하고 오세요~')
 
 
@@ -215,7 +246,8 @@ def main():
                 exc_type, exc_obj, exc_tb = exc_info()
                 fname = path.split(exc_tb.tb_frame.f_code.co_filename)[1]
                 print(exc_type, fname, exc_tb.tb_lineno)
-            input("\n종료하려면 엔터를 눌러주세요.")
+            if input("\n종료하려면 엔터를 눌러주세요. (clone 관리로 돌아가기 : 1) "):
+                continue
             exit()
             run(clear, shell=True)
             break
@@ -226,7 +258,8 @@ def main():
                 exc_type, exc_obj, exc_tb = exc_info()
                 fname = path.split(exc_tb.tb_frame.f_code.co_filename)[1]
                 print(exc_type, fname, exc_tb.tb_lineno)
-            input("\n종료하려면 엔터를 눌러주세요.")
+            if input("\n종료하려면 엔터를 눌러주세요. (clone 관리로 돌아가기 : 1) "):
+                continue
             exit()
             run(clear, shell=True)
             break
