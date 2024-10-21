@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>나의 포트폴리오</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="container">
+  <h1 class="title">안녕하세요, 제 이름은 <b id="name">홍길동</b>입니다.</h1>
+  
+  <img class="img" src="" alt="" width="200">
+  
+  <h2>소개</h2>
+  <p>저는 <b id="job">[직업/전공]</b>으로 일하고 있습니다. <b id="experience">[간단한 경력/학력]</b>을 가지고 있으며, <b>[특기 또는 관심 분야]</b>에 대해 꾸준히 공부하고 있습니다.</p>
+  
+  <h2>프로젝트</h2>
+  <ul id="list-group">
+    <li><b>프로젝트 1:</b> <span class="project-1">[프로젝트 1 제목]</span></li>
+    <li><b>프로젝트 2:</b> <span class="project-2">[프로젝트 2 제목]</span></li>
+    <li><b>프로젝트 3:</b> <span class="project-3">[프로젝트 3 제목]</span></li>
+  </ul>
+  
+  <h2>연락처</h2>
+  <p>이메일: <b id="email">[이메일 주소]</b></p>
+  <p>전화번호: <b id="phone">[전화번호]</b></p>
+  <!-- <p>SNS: <b id="SNS">[SNS]</b></p> -->
+  
+  <script>
+    const name = document.querySelector('#name')
+    const job = document.querySelector('#job')
+    const experience = document.querySelector('#experience')
+    const email = document.querySelector('#email')
+    const phone = document.querySelector('#phone')
+    // const SNS = document.querySelector('#SNS')
+
+    // SNS 정보를 추가할 b 요소 생성
+    const snsElement = document.createElement('b')
+    snsElement.id = 'SNS'
+    snsElement.textContent = 'hgd@sns.com'
+
+    // SNS 정보를 추가할 p 요소 생성
+    const snsContainer = document.createElement('p')
+    snsContainer.textContent = 'SNS: '
+    snsContainer.appendChild(snsElement)
+
+    // body에 SNS 정보 추가
+    document.body.appendChild(snsContainer)
+
+    name.textContent = '홍길동'
+    job.textContent = '의적'
+    experience.textContent = '서당'
+    email.textContent = 'hgd@korea'
+    phone.textContent = '010-1234-1234'
+    // SNS.textContent = 'hgd@sns.com'
+    
+    const body = document.body
+    body.classList.add('container')
+    const h1 = document.querySelector('h1')
+    h1.classList.add('title')
+
+    name.classList.add('highlight')
+    job.classList.add('highlight')
+    experience.classList.add('highlight')
+    email.classList.add('highlight')
+    phone.classList.add('highlight')
+    SNS.classList.add('highlight')
+    
+
+    const img = document.querySelector('img')
+    img.setAttribute('src', 'profile.jpg') 
+    img.setAttribute('alt', '프로필 사진') 
+    
+
+  </script>
+</body>
+</html>
