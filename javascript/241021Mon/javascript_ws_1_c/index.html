@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    .article {
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      padding: 10px;
+      margin-bottom: 10px;
+      background-color: #f9f9f9;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="container">
+
+  </div>
+  <script>
+    // 아래에 코드 작성
+    // 새로운 article 요소 생성
+    const articleDiv = document.createElement('div');
+    articleDiv.className = 'article';
+
+    // 제목 생성
+    const articleTitle = document.createElement('h1');
+    articleTitle.textContent = 'Article Title';
+
+    // 본문 생성
+    const articleContent = document.createElement('p');
+    articleContent.style.borderTop = '1px solid black';
+    articleContent.style.paddingTop = '10px';
+    articleContent.textContent = 'This is an article content';
+
+    // 요소를 조합하여 articleDiv 완성
+    articleDiv.appendChild(articleTitle);
+    articleDiv.appendChild(articleContent);
+
+    // container에 articleDiv 추가
+    document.getElementById('container').appendChild(articleDiv);
+  </script>
+</body>
+
+</html>
