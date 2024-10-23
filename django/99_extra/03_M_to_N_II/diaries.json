@@ -1,0 +1,12 @@
+[
+{
+    "model": "diaries.diary",
+    "pk": 1,
+    "fields": {
+        "content": "123213213",
+        "picture": "",
+        "created_at": "2024-10-15T10:48:42.362Z",
+        "like_users": []
+    }
+}
+]

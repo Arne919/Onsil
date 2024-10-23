@@ -1,0 +1,21 @@
+[
+{
+    "model": "accounts.user",
+    "pk": 1,
+    "fields": {
+        "password": "pbkdf2_sha256$600000$cRI9uXjWe7Qp1Hl4ZZcKGJ$kS5Sj+mMAQ4nA72ytSQIYRdZnERDD1Bk6WONpLSbxvg=",
+        "last_login": "2024-10-15T10:48:36.034Z",
+        "is_superuser": false,
+        "username": "viktor",
+        "first_name": "",
+        "last_name": "",
+        "email": "",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2024-10-15T10:48:35.696Z",
+        "groups": [],
+        "user_permissions": [],
+        "subscription": []
+    }
+}
+]
