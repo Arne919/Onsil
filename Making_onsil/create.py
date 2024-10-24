@@ -25,19 +25,16 @@ Gitlab Create Ver 1.2
 Chrome 129버전의 headless 모드 설정 문제로 흰 창이 영역전개 해버림
 -> 창이 뜨는 위치를 저 멀리 보내는 것으로 임시 해결
 
+    Gitlab Create Ver 1.2.1
+
+    핫픽스 ; ARM기반 운영체제에 Chrome driver 설치 시 x86으로 다운받을 가능성 발견.
+    arm64에 맞게 다운받도록 하는 코드 추가.
 
 
-Gitlab Create Ver 1.2.1
+    Gitlab Create Ver 1.2.2
 
-핫픽스 ; ARM기반 운영체제에 Chrome driver 설치 시 x86으로 다운받을 가능성 발견.
-arm64에 맞게 다운받도록 하는 코드 추가.
-
-
-
-Gitlab Create Ver 1.2.2
-
-핫픽스 ; 실습실 생성할 과목 입력 시 범위가 상수로 고정되어 있어 수정.
-실습실 차수 목록 범위 추가
+    핫픽스 ; 실습실 생성할 과목 입력 시 범위가 상수로 고정되어 있어 수정.
+    실습실 차수 목록 범위 추가
 
 
 
@@ -54,6 +51,25 @@ Gitlab Create Ver 2.0
 한 차수의 10개 실습 전체 다 한번에 제출 or 해당 차수의 과제만 제출 or 해당 차수의 과제를 제외한 실습만 제출 택 1
 특정 과제 제출 기능은 각 과제의 제목을 알고 작성해주거나 각 차수의 과제 순서를 알고 해당 번호를 넘겨줘야
 그 과제를 찾을 수 있음. -> 각 차수마다 실습 순서가 다르기 때문. > 12345abc or abc12345
+
+
+
+Gitlab Create Ver 2.1
+
+SSAFY Git UI 업데이트로 인해 웹 구조 일부 변경 발생 -> div.title이 여러 개가 되면서 탐색이 안되는 것을 수정
+동적 대기 방식과 정적 대기 방식 혼합 사용으로 변경하여 생성/제출 속도 증가
+
+    Gitlab Create Ver 2.1.1
+
+    안정성 증가 위해
+    제출시 정적 대기 추가
+    생성시 정적 대기 시간 증가
+    실습 관리 재섭속시 로그인 정보 유지(프로그램 종료시 초기화)
+    
+    
+    Gitlab Create Ver 2.1.2
+
+    핫픽스 ; 로그인 실패 시 무한 루프 돌면서 계속 로그인 실패 발생 -> 수정
 '''
 
 from selenium import webdriver
@@ -62,6 +78,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.keys import Keys
+# from selenium.webdriver.safari.options import Options as SOptions
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.chrome.service import Service
 from webdriver_manager.chrome import ChromeDriverManager
@@ -72,7 +89,7 @@ from subprocess import run
 import os
 os_nlst={'Windows':1, 'Darwin':2, 'Linux':3, 'Ubuntu':4, '':5}
 
-def main():
+def main(Id, password):
     os_n=os_nlst[system()]
     if os_n==5:print('운영체제 뭐쓰세요...? 정보가 없는데요....')
     clear = 'cls' if os_n==1 else 'clear'
@@ -97,11 +114,12 @@ def main():
             print('\n실습 관리 프로그램을 종료합니다.')
             sleep(1)
             run(clear, shell=True)
-            return
+            return Id, password
         elif Flags==1: Flags=True
         else: Flags=False
     print()
     options = Options()
+    # if os_n==2: options = SOptions()
     options.add_argument("--headless")  # 129버전에선 --headless=old로 흰창 날릴 순 있으나 다른버전에서 문제 생길 수 있으므로 저 멀리 날려버림
     options.add_argument("--window-position=-15400,-15400")  # 창이 뜨는 위치 변경. 4k나 8k에선 보일수도?
     options.add_argument("log-level=3")
@@ -112,53 +130,56 @@ def main():
     options.add_argument('--disable-blink-features=AutomationControlled')
     options.add_experimental_option('excludeSwitches', ['enable-logging', 'enable-automation'])
     options.add_experimental_option("useAutomationExtension", False)
-    # options.add_argument(userAgent)
     service = Service(ChromeDriverManager().install())
     url = 'https://project.ssafy.com'
 
     dr = webdriver.Chrome(service=service, options=options)
-    wait = WebDriverWait(dr, 5)
+    # dr = webdriver.Safari(options=options)
+    wait = WebDriverWait(dr, 10)
     dr.get(url)
-    dr.implicitly_wait(4)
+    dr.implicitly_wait(5)
+    act = ActionChains(dr)
 
     id_box = dr.find_element(By.ID,"userId")
     password_box = dr.find_element(By.ID,"userPwd")
-
+    login_page = dr.current_url
+    
+    login = False
+    
+    if not (Id=='' and password==''): login = True
+    
+    
     while True:
-        button = dr.find_elements(By.CLASS_NAME,'btn')
-        login_button=button[0]
+        login_button = wait.until(EC.element_to_be_clickable((By.XPATH,"//a[contains(text(),'로그인')]")))  # dr.find_elements(By.CLASS_NAME,'btn')
         
-        act = ActionChains(dr)
-        dr.implicitly_wait(2)
-        
-        if len(button)>1:
+        try:modal_button=WebDriverWait(dr, 0.5).until(EC.element_to_be_clickable((By.XPATH, "//a[contains(text(),'확인')]")))
+        except:pass
+        else:
             run(clear, shell=True)
             print("\n아이디 또는 비밀번호를 잘못 입력하였습니다. 다시 입력해주세요.")
             print("5번 실패시 계정이 잠기니 주의해주세요.")
-            modal_button=button[1]
             act.click(modal_button).perform()
             id_box.send_keys(Keys.CONTROL + "a")
             id_box.send_keys(Keys.DELETE)
             password_box.send_keys(Keys.CONTROL + "a")
             password_box.send_keys(Keys.DELETE)
-        dr.implicitly_wait(2)
         
-        id =   input("\nGitlab ID(email) : ")
-        password = getpass("Gitlab PASSWORD : ")
-        act.send_keys_to_element(id_box, '{}'.format(id)).send_keys_to_element(password_box,'{}'.format(password)).click(login_button).perform()
+        if not login:
+            Id=input("\nGitlab ID(email) : ")
+            password=getpass("Gitlab PASSWORD : ")
+        act.send_keys_to_element(id_box, '{}'.format(Id)).send_keys_to_element(password_box,'{}'.format(password)).click(login_button).perform()
         sleep(3)
         dr.implicitly_wait(5)
-        if dr.current_url == 'https://project.ssafy.com/login?returnPath=%2Fhome':continue
+        if dr.current_url == login_page:continue
+        login = True
         break
-    act = ActionChains(dr)
-    print("\n깃랩 로그인 성공!\n")
-    dr.implicitly_wait(4)
     
     run(clear, shell=True)
+    print("\n깃랩 로그인 성공!\n")
     
     # 실습실 과목 가져오기
     Xpath="//div[contains(@class,'tit_')]//a"
-    elements=dr.find_elements(By.XPATH, Xpath)
+    elements=wait.until(EC.visibility_of_all_elements_located((By.XPATH, Xpath)))  # dr.find_elements(By.XPATH, Xpath)
     sub=[]
     i=0
     
@@ -166,13 +187,22 @@ def main():
     for e in elements:
         i+=1
         sub.append(e)
-        print(f'{i}. {e.text}', end='\t')
+        print(f'{i}. {e.text}', end='    ')
     print()
     x=0
     while x<1 or x>len(elements):
         try:x=int(input("\n실습실을 생성할 과목을 선택해주세요 : " if Flags else "\n실습을 제출할 과목을 선택해주세요 : "))
         except:print("정수만 입력해주세요.")
         else:
+            if x==0:
+                try:
+                    dr.quit()
+                    run(clear, shell=True)
+                    return Id, password
+                except:
+                    dr.quit()
+                    run(clear, shell=True)
+                    return Id, password
             if x<1 or x>len(elements):print(f"1과 {len(elements)} 사이 숫자만 입력해주세요.")
 
     
@@ -180,8 +210,7 @@ def main():
     print("\n목록을 불러오는 중입니다...\n")
     select=sub[x-1]
     act.click(select).perform()
-    sleep(2)
-    table=dr.find_element(By.CLASS_NAME, 'con_table')
+    table=wait.until(EC.visibility_of_element_located((By.CLASS_NAME, 'con_table'))) # dr.find_element(By.CLASS_NAME, 'con_table')
     lst=table.find_elements(By.TAG_NAME, 'a')
     listpage=dr.current_url
     N=len(lst)
@@ -212,7 +241,7 @@ def main():
         
         select=lst[x-1]
         act.click(select).perform()
-        sleep(2)
+        dr.implicitly_wait(5)
         page=dr.current_url
         tab=[]
         for _ in range(2 if subFlags==1 else 8 if subFlags==2 else 10):  # 실습실 탭 다중으로 열기
@@ -226,59 +255,57 @@ def main():
         Xpath="//a[contains(text(),'상세보기')]"
         for i in range(2 if subFlags==1 else 8 if subFlags==2 else 10):
             dr.switch_to.window(tab[i])
-            #elements=dr.find_elements(By.XPATH, Xpath)
-            sleep(2)
+            sleep(1)
+            dr.implicitly_wait(5)
+            
             try:
-                elements=dr.find_elements(By.XPATH, Xpath)
-                name = WebDriverWait(dr, 5).until(EC.element_to_be_clickable(elements[i if subFlags!=1 else -(i+1)]))
+                elements=wait.until(EC.visibility_of_all_elements_located((By.XPATH, Xpath)))#dr.find_elements(By.XPATH, Xpath)
+                name = wait.until(EC.element_to_be_clickable(elements[i if subFlags!=1 else -(i+1)]))
                 name.click()
             except Exception as e:
                 try:
                     print(e)
                     print("재시도중...")
-                    elements=dr.find_elements(By.XPATH, Xpath)
-                    name = WebDriverWait(dr, 5).until(EC.element_to_be_clickable(elements[i if subFlags!=1 else -(i+1)]))
+                    elements=wait.until(EC.visibility_of_all_elements_located((By.XPATH, Xpath)))
+                    name = wait.until(EC.element_to_be_clickable(elements[i if subFlags!=1 else -(i+1)]))
                     name.send_keys(Keys.ENTER)
                 except Exception as e:
                     try:
                         print(e)
                         print("재시도중......")
-                        elements=dr.find_elements(By.XPATH, Xpath)
-                        name = WebDriverWait(dr, 5).until(EC.element_to_be_clickable(elements[i if subFlags!=1 else -(i+1)]))
+                        elements=wait.until(EC.visibility_of_all_elements_located((By.XPATH, Xpath)))
+                        name = wait.until(EC.element_to_be_clickable(elements[i if subFlags!=1 else -(i+1)]))
                         dr.execute_script("arguments[0].click();", name)
                     except Exception as e:
                         print(e)
                         print(f"{i+1}번째 실습실 생성 문제 생김...." if Flags else f"{i+1}번째 실습실 접속 문제 생김...." )
                         break
-            sleep(2)
-            project_name.append(dr.find_element(By.CLASS_NAME, "title").find_element(By.TAG_NAME, "h3").get_attribute("title"))
-            print(f'{i+1}. \"{project_name[i]}\"', '실습실 생성중....' if Flags else '실습실 들어가는 중....')
-            pro=dr.find_element(By.XPATH, "//a[contains(text(),'실습하기')]")
+            wait.until(EC.visibility_of_element_located((By.CSS_SELECTOR, "div.left")))
+            pjt = wait.until(EC.visibility_of_element_located((By.CSS_SELECTOR, "div.left"))).find_element(By.TAG_NAME, "h3").text
+            project_name.append(pjt)
+            print(f'{i+1}. {project_name[i]}', '실습실 생성중....' if Flags else '실습실 들어가는 중....')
             
             # 각 실습실 실습하기 버튼 누르기
             try:
-                pro=dr.find_element(By.XPATH, "//a[contains(text(),'실습하기')]")
-                name = WebDriverWait(dr, 5).until(EC.element_to_be_clickable(pro))
-                name.click()
+                pro=wait.until(EC.element_to_be_clickable((By.XPATH, "//a[contains(text(),'실습하기')]")))
+                pro.click()
             except Exception as e:
                 try:
                     print(e)
-                    pro=dr.find_element(By.XPATH, "//a[contains(text(),'실습하기')]")
-                    print("재시도중...")
-                    name = WebDriverWait(dr, 5).until(EC.element_to_be_clickable(pro))
-                    dr.execute_script("arguments[0].click();", name)
+                    print("재시도중......")
+                    pro=wait.until(EC.element_to_be_clickable((By.XPATH, "//a[contains(text(),'실습하기')]")))
+                    dr.execute_script("arguments[0].click();", pro)
                 except Exception as e:
                     try:
                         print(e)
-                        pro=dr.find_element(By.XPATH, "//a[contains(text(),'실습하기')]")
+                        pro=wait.until(EC.element_to_be_clickable((By.XPATH, "//a[contains(text(),'실습하기')]")))
                         print("재시도중......")
-                        name = WebDriverWait(dr, 5).until(EC.element_to_be_clickable(pro))
-                        name.send_keys(Keys.ENTER)
+                        pro.send_keys(Keys.ENTER)
                     except Exception as e:
                         print(e)
-                        print(f"{i+1}번째 실습실 생성 문제 생김...." if Flags else f"{i+1}번째 실습실 접속 문제 생김...." )
+                        print(f"{i+1}번째 실습실 생성 문제 생김........" if Flags else f"{i+1}번째 실습실 접속 문제 생김........" )
                         break
-            sleep(2)
+            sleep(1)
             dr.switch_to.window(tab[i])
             dr.close()
         else:
@@ -288,27 +315,29 @@ def main():
             for i in range(2 if subFlags==1 else 8 if subFlags==2 else 10):
                 dr.switch_to.window(dr.window_handles[-1])
                 if not Flags:
-                    sleep(0.5)
-                    Submit0=dr.find_element(By.CLASS_NAME, 'sub_menu')
+                    dr.implicitly_wait(5)
+                    sleep(0.3)
+                    Submit0=wait.until(EC.element_to_be_clickable((By.CLASS_NAME, "sub_menu")))  # dr.find_element(By.CLASS_NAME, 'sub_menu')
                     act.move_to_element(Submit0).perform()
-                    sleep(0.5)
-                    Submit1=dr.find_element(By.XPATH, "//a[contains(text(),'실습 제출하기')]")
+                    sleep(0.3)
+                    Submit1=wait.until(EC.element_to_be_clickable((By.XPATH, "//a[contains(text(),'실습 제출하기')]")))  # dr.find_element(By.XPATH, "//a[contains(text(),'실습 제출하기')]")
                     act.click(Submit1).perform()
-                    sleep(0.5)
-                    Submit2=dr.find_element(By.CLASS_NAME, 'btn_primary')
+                    sleep(0.3)
+                    Submit2=wait.until(EC.element_to_be_clickable((By.CLASS_NAME, "btn_primary")))  # dr.find_element(By.CLASS_NAME, 'btn_primary')
                     act.click(Submit2).perform()
-                    sleep(0.5)
-                    Submit3=dr.find_element(By.CSS_SELECTOR, 'a.btn.btnfn.primary')
+                    sleep(0.3)
+                    Submit3=wait.until(EC.element_to_be_clickable((By.CSS_SELECTOR, "a.btn.btnfn.primary")))  # dr.find_element(By.CSS_SELECTOR, 'a.btn.btnfn.primary')
                     act.click(Submit3).perform()
+                    sleep(0.3)
+                    wait.until(EC.visibility_of_element_located((By.CSS_SELECTOR, "i.ico.ico_ok")))
                     print(f'{i+1}. \"{project_name[-(i+1)]}\" 제출.... 완료...')
-                sleep(0.5)
                 dr.close()
             print(f'\n{x}차수 실습실 생성 성공!' if Flags else f'\n{x}차수 실습 제출 성공!')
         if x!=DAY2:
             dr.switch_to.window(dr.window_handles[-1])
             dr.get(listpage)
             sleep(3)
-            table=dr.find_element(By.CLASS_NAME, 'con_table')
+            table=wait.until(EC.visibility_of_element_located((By.CLASS_NAME, 'con_table')))  # dr.find_element(By.CLASS_NAME, 'con_table')
             lst=table.find_elements(By.TAG_NAME, 'a')
             run(clear, shell=True)
     else:
@@ -321,3 +350,4 @@ def main():
     else:print('\n실습 관리 프로그램을 종료합니다.')
     sleep(1)
     run(clear, shell=True)
+    return Id, password
