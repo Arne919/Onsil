@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    const students = [
+      { name: 'Alice', scores: [85, 90, 95] },
+      { name: 'Bella', scores: [50, 80, 80] },
+      { name: 'Caley', scores: [90, 55, 35] },
+      { name: 'Dave', scores: [100, 100, 100] },
+      { name: 'Eve', scores: [88, 90, 92] }
+    ]
+    // 아래에 코드 작성
+    // 1. 함수 makeAvgScores1
+    // javascript의 'for' statement를 활용하여 작성
+    function makeAvgScores1(students) {
+      const avgScores = []
+      for (let i = 0; i < students.length; i++) {
+        const student = students[i]
+        const total = student.scores.reduce((sum, score) => sum + score, 0)
+        const avg = total / student.scores.length
+        avgScores.push({ name: student.name, avgScore: avg })
+      }
+      return avgScores;
+    }
+    // 2. 함수 makeAvgScores2
+    // javascript의 'for...of' statement를 활용하여 작성
+    function makeAvgScores2(students) {
+      const avgScores = []
+      for (const student of students) {
+        const total = student.scores.reduce((sum, score) => sum + score, 0)
+        const avg = total /student.scores.length
+        avgScores.push({ name: student.name, avgScore: avg })
+      }
+      return avgScores
+    }
+    // 3. 함수 makeAvgScores3
+    // javascript의 'Array Helper Methods'를 활용하여 작성
+    function makeAvgScores3(students) {
+      return students.map(student => {
+        const total = student.scores.reduce((sum, score) => sum + score, 0);
+        const avg = total / student.scores.length;
+        return { name: student.name, avgScore: avg };
+      });
+    }
+
+
+    // 함수 호출
+    const result1 = makeAvgScores1(students)
+    const result2 = makeAvgScores2(students)
+    const result3 = makeAvgScores3(students)
+    console.log(result1)
+    console.log(result2)
+    console.log(result3)
+  </script>
+</body>
+
+</html>
