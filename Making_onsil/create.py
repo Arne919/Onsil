@@ -70,6 +70,13 @@ SSAFY Git UI 업데이트로 인해 웹 구조 일부 변경 발생 -> div.title
     Gitlab Create Ver 2.1.2
 
     핫픽스 ; 로그인 실패 시 무한 루프 돌면서 계속 로그인 실패 발생 -> 수정
+    
+    
+    Gitlab Create Ver 2.1.3
+
+    핫픽스 ; 과목이 6개가 되면서 무언가 꼬임.
+        기존; 과목 a태그 바로 가져옴
+        수정; 과목 개개별 카드 가져와서 그 안의 a태그 가져오는 것으로 변경
 '''
 
 from selenium import webdriver
@@ -135,13 +142,13 @@ def main(Id, password):
 
     dr = webdriver.Chrome(service=service, options=options)
     # dr = webdriver.Safari(options=options)
-    wait = WebDriverWait(dr, 10)
+    wait = WebDriverWait(dr, 5)
     dr.get(url)
     dr.implicitly_wait(5)
     act = ActionChains(dr)
 
-    id_box = dr.find_element(By.ID,"userId")
-    password_box = dr.find_element(By.ID,"userPwd")
+    id_box = WebDriverWait(dr, 3).until(EC.visibility_of_element_located((By.ID,"userId")))  # dr.find_element(By.ID,"userId")
+    password_box = WebDriverWait(dr, 3).until(EC.visibility_of_element_located((By.ID,"userPwd"))) # dr.find_element(By.ID,"userPwd")
     login_page = dr.current_url
     
     login = False
@@ -150,7 +157,7 @@ def main(Id, password):
     
     
     while True:
-        login_button = wait.until(EC.element_to_be_clickable((By.XPATH,"//a[contains(text(),'로그인')]")))  # dr.find_elements(By.CLASS_NAME,'btn')
+        login_button = WebDriverWait(dr, 3).until(EC.element_to_be_clickable((By.XPATH,"//a[contains(text(),'로그인')]")))  # dr.find_elements(By.CLASS_NAME,'btn')
         
         try:modal_button=WebDriverWait(dr, 0.5).until(EC.element_to_be_clickable((By.XPATH, "//a[contains(text(),'확인')]")))
         except:pass
@@ -176,21 +183,21 @@ def main(Id, password):
     
     run(clear, shell=True)
     print("\n깃랩 로그인 성공!\n")
-    
-    # 실습실 과목 가져오기
-    Xpath="//div[contains(@class,'tit_')]//a"
-    elements=wait.until(EC.visibility_of_all_elements_located((By.XPATH, Xpath)))  # dr.find_elements(By.XPATH, Xpath)
+    sleep(1)
+    # 실습실 과목 가져오기a
     sub=[]
-    i=0
+    practices = dr.find_elements(By.CLASS_NAME, 'myPractice')
+    for practice in practices:
+        Xpath="div[contains(@class,'tit_type0')]//a"
+        element= WebDriverWait(practice, 5).until(EC.presence_of_element_located((By.XPATH, Xpath))) # dr.find_element(By.CLASS_NAME, 'swiper-container').find_elements(By.XPATH, Xpath)
+        sub.append(element)
+
+    for i, e in enumerate(sub):
+        print(f'{i+1}. {e.get_attribute("innerText")}', end='    ')
+    print()
     
-    print()
-    for e in elements:
-        i+=1
-        sub.append(e)
-        print(f'{i}. {e.text}', end='    ')
-    print()
     x=0
-    while x<1 or x>len(elements):
+    while x<1 or x>len(sub):
         try:x=int(input("\n실습실을 생성할 과목을 선택해주세요 : " if Flags else "\n실습을 제출할 과목을 선택해주세요 : "))
         except:print("정수만 입력해주세요.")
         else:
@@ -203,29 +210,31 @@ def main(Id, password):
                     dr.quit()
                     run(clear, shell=True)
                     return Id, password
-            if x<1 or x>len(elements):print(f"1과 {len(elements)} 사이 숫자만 입력해주세요.")
-
+            if x<1 or x>len(sub):print(f"1과 {len(sub)} 사이 숫자만 입력해주세요.")
+    AI=False
     
     # 해당과목의 실습실 목록 불러오기
     print("\n목록을 불러오는 중입니다...\n")
     select=sub[x-1]
+    if select.get_attribute("innerText") in ['AI 파운데이션 모델']:AI=True
     act.click(select).perform()
     table=wait.until(EC.visibility_of_element_located((By.CLASS_NAME, 'con_table'))) # dr.find_element(By.CLASS_NAME, 'con_table')
     lst=table.find_elements(By.TAG_NAME, 'a')
     listpage=dr.current_url
     N=len(lst)
-    DAY1=DAY2=0 
+    DAY1=DAY2=0
+
     while DAY1<1 or DAY1>N or DAY2<1 or DAY2>N:
         try:
             DAYs=input(f'차수를 입력해주세요. [1 ~ {N}] ( ex> 2 (단일), 1-3 (다중) ) : ')
-            if '-' in DAYs: DAY1, DAY2 = DAYs.split('-')
-            else : DAY1 = DAY2 = DAYs
-            if DAY2=='':DAY2 = DAY1
-            DAY1, DAY2 = int(DAY1), int(DAY2)
+            if '-' in DAYs: Day1, Day2 = DAYs.split('-')
+            else : Day1 = Day2 = DAYs
+            if Day2=='':Day2 = Day1
+            DAY1, DAY2 = int(Day1), int(Day2)
         except:print("정수를 입력해주세요.")
         else:
             if DAY1<1 or DAY1>N or DAY2<1 or DAY2>N:print("없는 차수입니다. 다시 입력해주세요.")
-    
+
     run(clear, shell=True)
     for x in range(DAY1, DAY2+1):
         print(f"\n {x}차수 실습실 생성 시도중 입니다...\n" if Flags else f"\n {x}차수 실습실에 들어가는 중입니다...\n")
@@ -244,7 +253,10 @@ def main(Id, password):
         dr.implicitly_wait(5)
         page=dr.current_url
         tab=[]
-        for _ in range(2 if subFlags==1 else 8 if subFlags==2 else 10):  # 실습실 탭 다중으로 열기
+        
+        practice_range = 5 if AI else 2 if subFlags==1 else 8 if subFlags==2 else 10
+        
+        for _ in range(practice_range):  # 실습실 탭 다중으로 열기
             dr.execute_script(f'window.open("{page}");')
             dr.switch_to.window(dr.window_handles[-1])
             tab.append(dr.current_window_handle)
@@ -253,7 +265,7 @@ def main(Id, password):
         
         # 1탭 순회하면서 순서대로 상세보기 버튼 누르기
         Xpath="//a[contains(text(),'상세보기')]"
-        for i in range(2 if subFlags==1 else 8 if subFlags==2 else 10):
+        for i in range(practice_range):
             dr.switch_to.window(tab[i])
             sleep(1)
             dr.implicitly_wait(5)
@@ -312,7 +324,7 @@ def main(Id, password):
             if not Flags: 
                 run(clear, shell=True)
                 print(f"\n {x}차수 실습 제출 하는 중...\n")
-            for i in range(2 if subFlags==1 else 8 if subFlags==2 else 10):
+            for i in range(practice_range):
                 dr.switch_to.window(dr.window_handles[-1])
                 if not Flags:
                     dr.implicitly_wait(5)
