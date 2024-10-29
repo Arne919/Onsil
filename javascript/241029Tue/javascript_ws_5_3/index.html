@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <h1>인기 영화들</h1>
+  <ul id="movie-list"></ul>
+  <!-- axios CDN을 삽입한다. -->
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script>
+    const ul = document.querySelector('ul')
+    const API_KEY = '09cc370ceeb560c79ab1643185c085ff'
+    const API_URL = `https://api.themoviedb.org/3/movie/popular?api_key=${API_KEY}&language=ko-KR&page=1`
+    // 코드를 입력한다.
+    // 인기 영화 목록을 가져오는 함수
+    const PopularMovies = async () => {
+    try {
+      const response = await axios.get(API_URL);
+      const movies = response.data.results;
+
+      // 평점이 7 이상인 영화 필터링
+      const filteredMovies = movies.filter(movie => movie.vote_average >= 7);
+
+      // 영화 정보를 리스트에 추가
+      filteredMovies.forEach(movie => {
+        const li = document.createElement('li');
+        li.innerHTML = `${movie.title}`
+        ul.appendChild(li);
+      });
+      } catch (error) {
+        console.error("영화 정보를 가져오는 데 오류가 발생했습니다:", error);
+      }
+    };
+    // 페이지 로드 시 영화 목록 가져오기
+    window.onload = PopularMovies;
+  </script>
+</body>
+</html>
