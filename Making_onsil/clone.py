@@ -44,6 +44,9 @@ Gitlab Auto Clone Ver 2.2
 ROOT 폴더명 추가 및 차수 폴더 과목명 ALL 대문자로 변경
 차수 다중입력 기능 추가
 종료 시 원한다면 계속 Clone에 머무를 수 있도록 변경
+
+    Gitlab Auto Clone Ver 2.2.1
+    vue 실습실 레포규칙 달라서 그에 맞게 대응 코드 추가
 '''
 
 from os import path, getcwd
@@ -55,7 +58,7 @@ from requests import get
 from sys import exc_info
 
 SEPERATOR=['hw','ws']
-STAGE=[['2','4'], ['1','2','3','4','5','a','b','c']]
+STAGE=[['2','4'], ['1','2','3','4','5','a','b','c'], ['1','2','3']]
 
 os_nlst={'Windows':1, 'Darwin':2, 'Linux':3, 'Ubuntu':4, '':5}  # 운영체제 정보 가져오기
 sc={'!':'%21','#':'%23','$':'%24','&':'%26',"'":'%27','(':'%28',')':'%29','*':'%2A','+':'%2B',  # 리눅스 사용자 클론 시 비밀번호에 특수문자가 존재할 경우
@@ -143,7 +146,7 @@ def clone(USER_NAME, SUBJECT, OS_N):  # 깃랩 레포 클론하기
     
     for DAY in range(int(DAY1), int(DAY2)+1):
         DAY=str(DAY)
-        for sep in range(2):
+        for sep in range(len(SEPERATOR)):
             for st in STAGE[sep]:
                 PROJECT=f'{SUBJECT}_{SEPERATOR[sep]}_{DAY}_{st}'
                 r_folder=SUBJECT.upper()
@@ -186,7 +189,7 @@ def del_dot_git(USER, SUBJECT, OS_N):
             
             for DAY in range(int(DAY1), int(DAY2)+1):
                 DAY=str(DAY)
-                for sep in range(2):
+                for sep in range(len(SEPERATOR)):
                     for st in STAGE[sep]:
                         PROJECT=f'{SUBJECT}_{SEPERATOR[sep]}_{DAY}_{st}'
                         r_folder=SUBJECT.upper()
@@ -225,6 +228,10 @@ def main():
     clear = 'cls' if os_n==1 else 'clear'  # Windows에선 cls Mac/Linux에서는 clear
     sleep(2)
     u,su=file()  # 사용자 정보 등록/가져오기
+    
+    if su in ['vue', 'VUE', 'Vue']:
+        SEPERATOR.append('ex')
+        for _ in range(3):STAGE[1].pop()
     
     while 1:
         try:
