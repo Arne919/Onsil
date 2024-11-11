@@ -1,0 +1,28 @@
+3838. 10차시 : 파운데이션 모델 응용 설계 - Personalize-SAM Tuning Lv1
+
+import matplotlib.pyplot as plt
+
+# 예측된 결과(이미지)와 정답(레이블)을 매개변수로 받아서 시각화하는 함수
+def visualize_prediction(prediction, ground_truth):
+    plt.figure(figsize=(10, 5))
+    
+    # 예측 결과 이미지
+    plt.subplot(1, 2, 1)
+    plt.title("Predicted Result")
+    plt.imshow(prediction)
+    plt.axis('off')
+    
+    # 정답 이미지
+    plt.subplot(1, 2, 2)
+    plt.title("Ground Truth")
+    plt.imshow(ground_truth)
+    plt.axis('off')
+    
+    plt.show()
+
+# 예측 결과와 정답 데이터를 입력하여 시각화 (예시)
+predicted_image = ...  # 모델의 최종 예측 결과 이미지
+ground_truth_image = ...  # 실제 정답 이미지
+
+# 시각화 함수 호출
+visualize_prediction(predicted_image, ground_truth_image)
