@@ -126,14 +126,13 @@ MOVIE MONSTER는 사용자들이 영화 정보를 탐색하고, 리뷰를 공유
 - Git/GitHub (버전 관리)
 
 ### 사용 방법
-[front]
-cd front/vue-front
-npm install
-npm install bootstrap
-npm run dev
+- [front] </br>
+cd front/vue-front </br>
+npm install </br>
+npm install bootstrap </br>
+npm run dev </br>
 
-
-[back]
+- [back]
 cd back
 (py -m venv venv)
 source venv/Scripts/activate
