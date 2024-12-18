@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    .is-completed {
+      text-decoration: line-through;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="app">
+    <!-- 이런것들... computed 필요 없다. -->
+    <h1>현재 전체 Todo 목록 : {{ todos.length }}</h1>
+    <!-- completed 정보에 따라서 길이가 달라지는 경우? -->
+    <!-- todos를 filter로 반환값이 true인 요소들만 모아서 새로운 배열을 만든다. 그것의 길이 -->
+    <!-- <h1>현재 완료된 Todo 목록 : {{ todos.filter(todo => todo.isCompleted).length }}</h1> -->
+
+    <!-- 일반적으로 어떠한 input에 대한 output이 복잡한 과정을 거칠땐, 함수를 쓴다. -->
+    <h1>현재 완료된 Todo 목록 : {{ completedTodosCount() }}</h1>
+    <h1>현재 완료된 Todo 목록 : {{ completedTodosCount() }}</h1>
+    <h1>현재 완료된 Todo 목록 : {{ completedTodosCount() }}</h1>
+    <h1>현재 완료된 Todo 목록 : {{ completedTodosCount() }}</h1>
+    <!-- 
+      computed 메서드 호출한 결과를 변수에 할당한 것이기 때문에
+      호출 () 을 하는게 아니라, 그냥 변수를 적는다.
+    -->
+    <h1>현재 완료된 Todo 목록 : {{ completedComputedTodosCount }}</h1>
+    <h1>현재 완료된 Todo 목록 : {{ completedComputedTodosCount }}</h1>
+    <h1>현재 완료된 Todo 목록 : {{ completedComputedTodosCount }}</h1>
+    <h1>현재 완료된 Todo 목록 : {{ completedComputedTodosCount }}</h1>
+    
+
+
+    <h1>Todo Application</h1>
+
+    <ul>
+      <!-- 
+        vue의 반복문 v-for를 사용해서 반복할 수 있다. 
+        반복하고 싶은 대상 요소 (element)에 직접 작성하면 끝.
+      -->
+      <!-- 
+        JS에서 배열을 순회할때는 for of 문을 썼었는데....
+        Vue에서의 v-for는 그런거 없다. 그냥 모두 for in 씁니다.
+        key값은 html에 원래 없는 속성. -> vue가 만들어 주는 것
+      -->
+      <!-- 
+        class를 사용해서 어떠한 스타일을 부여한다. 
+        class에 조건에 따라서 서로 다른 결과가 되도록 만들고 싶어.
+        그럴떈 v-bind:class="{부여할_클래스_명: 부여될조건}"
+      -->
+      <li
+        v-for="todo in todos"
+        :key="todo.id"
+        :class="{'is-completed': todo.isCompleted}"
+      >
+        <!-- for문을 통해서 얻어낸 todo 객체가 가진 속성을 잘 보여주자. -->
+        <!-- {{ todo }} -->
+        <!-- 
+          input tag의 type 중, checkbox는 value값을 false/true 만 가진다. 
+          vue는 input tag의 value와 vue에 정의한 변수의 값을 서로 공유 할 수 있다.
+          양방향 바인딩을 통해서 공유가 가능하다.
+          양방향 바인딩 -> 사용자가 입력한 값을, vue의 변수에도 반영
+                         vue의 변수에 변화가 생기면, 사용자의 화면에도 반영
+            v-model은, input tag의 value와 연동
+        -->
+        <input  type="checkbox" :id="`check-${todo.id}`" v-model="todo.isCompleted">
+        <!-- 
+          input tag는 label tag와 연결 될 수 있다.
+          label 태그에 적어둔 글자를 클릭해도, input tag에 포커싱되도록 할 수 있다.
+          label의 for 속성에는 input tag의 id를 찾는 기능을 가지고 있다.
+          input의 id를 고유한 값으로 만들고 싶다 -> todo의 id 값은 고유한 값이다.
+          id는 되도록 숫자만 적지는 않는게 좋다. 
+         -->
+        <label :for="`check-${todo.id}`">{{ todo.text }}</label>
+
+      </li>
+    </ul>
+  </div>
+
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+  <script>
+    // JS 객체의 구조를 분해하여 할당할 수 있는 ES6+ 이후 등장한 문법
+    // const obj = {
+    //   name: 'Alice',
+    //   age: 30
+    // }
+    // const name = obj.name // obj 객체의 name 속성을 `name` 변수에 할당
+    // const { name } = obj  // obj가 가진 속성명과 변수명이 같다면, 할당할때 그 속성명 생략 가능
+    // Vue.createApp 메서드를 createApp 변수에 할당할때 분해할당이 가능한데...
+    // Vue 객체는? -> CDN으로 받아와서 사용이 가능하다.
+    const { createApp, ref, computed, watch } = Vue
+
+    // app 변수는 createApp 함수의 호출 결과 (return)를 할당받은 변수
+    // Vue instance를 만들어서 할당하는 것
+    /*
+      python 문법에서...
+      arr = list([1, 2, 3, 4])
+      print(arr)  # [1, 2, 3, 4]
+      arr.append(3) -> 메서드 사용가능
+    */
+    const app = createApp({
+      setup() {
+        /*
+          // 이곳에 정의한 각종 변수들을 어떠한 객체에 담아서 반환
+          // const context = {
+          //   name: 'Alice',
+          //   age: 30
+          // }
+          // return context
+        */
+
+        // vue에서는 일반적인 속성의 데이터 타입을 사용할 수도 있지만,
+        // 화면 (html)에서 렌더링 (그려줄) 변수들은 (사용자와 상호작용하는 데이터)들은
+        // 반응형 객체로 만들어 줄거다, -> 사용자의 요청에 대해서 혹은 데이터의 변화에 따라서
+        // vue가 `반응` 해서 어떠한 일들을 해야 하기 때문에.
+
+        // todos 배열이 가진 객체들은 -> id, text, isComplete라는 정보를 가진 객체 3개
+        const todos = ref([
+          {id: 1, text: 'first todo', isCompleted: true},
+          {id: 2, text: 'second todo', isCompleted: true},
+          {id: 3, text: 'third todo', isCompleted: false},
+        ])
+
+        // 완료된 todo의 개수를 세어서 반환
+        // 이 함수를 호출할 때마다 코드가 실행된다.
+        const completedTodosCount = function () {
+          let result = 0
+          for (todo of todos.value) {
+            if (todo.isCompleted === true) {
+              result += 1
+            }
+          }
+          console.log('method is called!!!')
+          return result
+        }
+
+        // computed -> 계산된 (계산해주는 메서드)
+        // `하나의` 평가된 값을 반환하는 메서드 -> 변수에 할당
+        // method를 매번 호출하는것과는 이미 코드 작성방법부터 달라진다.
+        // 어떤 변수에 어떤 함수를 호출한 결과를 할당했고,
+        // 그 변수를 여러번 쓸 뿐이다.
+        /*
+          python 기준
+          def some():
+               return 1
+          print(some())
+          print(some())
+          print(some())
+
+          def other():
+              return 2
+          a = other()
+          print(a)
+          print(a)
+          print(a)
+        */
+        // computed는 vue의 메서드 였으나, 현재 변수 `computed`에 할당해서
+        // 호출하고 있다. -> method를 일반 함수 호출하듯이 호출 중이다.
+        // this에 문제가 발생 한다. (this를 호출한 방법에 따라 결정되기 대문에)
+        const completedComputedTodosCount = computed(() => {
+          let result = 0
+          for (todo of todos.value) {
+            if (todo.isCompleted === true) {
+              result += 1
+            }
+          }
+          console.log('computed is called!!!')
+          return result
+        })
+
+        // 첫번째 인자 -> 감시 대상
+        // 두번째 인자 -> callBack Func (첫번째인자: 감시대상의 새 값
+        //                             두번째인자: 감시대상의 옛 값)
+        watch(todos, (newVal, oldVal) => {
+          console.log(newVal)
+          console.log(oldVal)
+          // computed로 처리하지 못할 복잡한 로직들과,
+          // 내가 감시하고 있는 대상 이외의 값들에도 영향을 미쳐야 할때
+
+          // article을 감시하고 있었다 
+          // article이 변경되었을때 (1번 게시글 -> 2번 게시글)
+          // article이 변경되었을때 (게시글 정보 없음 -> 2번 게시글)
+          // 그 사실을 감지해서, 변경된 2번 게시글의 pk를 토대로
+          // 2번 게시글을 참조하고 있는 comment들을 달라고 API에 요청
+          // axios로 AJAX 요청을 보낼때 보통 watch를 사용한다.
+        })
+        return {
+          // 'todos': todos  -> JS에서는 이렇게 키값과 변수가 같다면 또 생략이 가능
+          todos, completedComputedTodosCount,
+          completedTodosCount
+        }
+      }
+    })
+
+    // 본문 (body)에서 id가 app인 요소를 찾아 mount 하는 함수.
+    app.mount('#app')
+  </script>
+</body>
+
+</html>
