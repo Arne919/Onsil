@@ -1,0 +1,64 @@
+{
+  "terminal.integrated.defaultProfile.windows": "Git Bash", // 기본 터미널 설정
+  "editor.mouseWheelZoom": true,
+  "workbench.iconTheme": "material-icon-theme", // 아이콘 테마
+
+  "security.workspace.trust.untrustedFiles": "open", // 기본 파일 바로 열람
+  "files.autoSave": "afterDelay", // 수정 시 자동 저장
+  "files.autoSaveDelay": 2000, // 수정 시 자동 저장시간 설정 (2초)
+
+  "editor.minimap.enabled": false, // 미니맵 비활성화
+  "explorer.confirmDelete": false, // 파일 삭제 시, 추가 확인하지 않음
+  "files.enableTrash": true, // 파일 삭제 시, 쓰레기통으로 이동
+
+  // python 설정
+  "python.analysis.autoImportCompletions": true, // 자동완성 활성화
+
+  // Django
+  "files.associations": {
+    "**/*.html": "html",
+    "**/templates/**/*.html": "django-html",
+    "**/templates/**/*": "django-txt",
+    "**/requirements{/**,*}.{txt,in}": "pip-requirements"
+  },
+  "emmet.includeLanguages": {
+    "django-html": "html"
+  },
+  "[django-html]": {
+    "editor.formatOnSave": true,
+    "editor.defaultFormatter": "junstyle.vscode-django-support"
+  },
+  // formatter(prettier) 설정
+  "editor.formatOnSave": true,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "prettier.htmlWhitespaceSensitivity": "ignore",
+  "prettier.printWidth": 200,
+  "prettier.semi": false,
+
+  // Vue 설정
+  "vue.complete.casing.tags": "pascal",
+  "vue.complete.casing.props": "kebab",
+  "vue.autoInsert.dotValue": true,
+  "vue.format.wrapAttributes": "force",
+  "vue.inlayHints.vBindShorthand": true,
+
+  // LiveShare 설정
+  "liveshare.anonymousGuestApproval": "accept",
+  "liveshare.guestApprovalRequired": false,
+  "liveshare.autoShareServers": false,
+  "liveshare.accessibility.voiceEnabled": false,
+  "liveshare.connectionMode": "relay",
+  "database-client.autoSync": true,
+  "recursiveMarkdownGenerator.autoGenerate": true,
+  "editor.inlineSuggest.enabled": true,
+
+  // github copilot 설정 (AI 자동완성 모든 파일 활성화)
+  "github.copilot.enable": {
+    "*": true,
+    "markdown": true
+  },
+  "redhat.telemetry.enabled": false,
+  "javascript.validate.enable": false,
+  "chat.editing.alwaysSaveWithGeneratedChanges": true,
+  "editor.fontFamily": "D2Coding, Consolas, 'Courier New', monospace"
+}
